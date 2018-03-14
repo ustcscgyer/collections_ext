@@ -56,6 +56,26 @@ pq = Heap(array, key = lambda x : x[0]); pq
 Out: [(5, 0), (3, [0, 1, 2]), (4, {'key': 'value'}), (2, 3.14159), (1, 'apple')]
 ```
 
+### QuickUnion
+This is a very efficient (almost linear time) implementation for network union problems. The interface is very simple, 
+for a given size of network, and given connections between the nodes, the data structure is able to answer the query 
+whether two nodes are within the same network. 
+```python
+# The connections can be specified at construction
+from collections_ext import QuickUnion
+qu = QuickUnion(6, ((0, 1),(1, 2),(3, 4)))
+
+# Extra connections can be added afterwards
+qu.union(4, 5)
+
+# Query is very efficient:
+qu.connected(0, 2)
+Out: True
+
+qu.connected(2, 3)
+Out: False
+```
+
 ## Where to get it
 The source code is currently hosted on GitHub at:
 https://github.com/ustcscgyer/collections_ext
