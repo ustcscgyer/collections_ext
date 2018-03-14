@@ -8,7 +8,7 @@
 Standard Python lacks many popular data structures, such as BinaryHeap, BST, etc. This reposotory is 
 an extension of the collections package in the standard Python.
 
-## Available Data Strucure
+## Available Data Strucures
 ### Heap
 Implementation of binary heap using array list (https://en.wikipedia.org/wiki/Heap_(data_structure)). 
 The object can be a list of any objects as long their values can be mutually compared.
