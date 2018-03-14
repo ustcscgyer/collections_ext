@@ -32,6 +32,7 @@ Out: [5, 3, 4, 2, 1]
 pq.insert(3.5); pq
 Out: [5, 3, 4, 2, 1, 3.5]
 
+# One step replace is faster than applying insert after pop
 pq.replace(4.5)
 Out: 5
 
