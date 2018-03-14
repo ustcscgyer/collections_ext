@@ -51,9 +51,9 @@ Out: [1, 2, 3, 4, 5]
 
 # Applying the same idea one can use list of tuples or other objects 
 # to construct the heap
-array = [(1, 'apple'), (2, 3.14159), (3, [0,1,2]), (4, {'key':'value'})]
+array = [(1, 'apple'), (2, 3.14159), (3, [0,1,2]), (4, {'key':'value'}), (5, 0)]
 pq = Heap(array, key = lambda x : x[0]); pq
-Out: [(4, {'key': 'value'}), (3, [0, 1, 2]), (2, 3.14159), (1, 'apple')]
+Out: [(5, 0), (3, [0, 1, 2]), (4, {'key': 'value'}), (2, 3.14159), (1, 'apple')]
 ```
 
 ## Where to get it
