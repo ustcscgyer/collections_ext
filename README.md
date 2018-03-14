@@ -16,11 +16,11 @@ The object can be a list of any objects as long their values can be mutually com
 ```python
 # Creating a heap is simple
 from collections_ext import Heap
-pq = Heap([1,2,3,4,5,6])
+pq = Heap([1,2,3,4,5]); pq
+Out: [5, 3, 4, 2, 1]
 
 # By default, the constructor makes a copy of the input array therefore does not mutate the input.
 # Alternatively, inplace arguement can be specified in order to save the time of coping a big array.
-
 array = [1, 2, 3, 4, 5]
 pq = Heap(array); array # array is not mutated
 Out: [1, 2, 3, 4, 5]
