@@ -1,1 +1,1 @@
-from heap import Heap
+from .heap import Heap
