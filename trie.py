@@ -15,9 +15,23 @@ class Trie(object):
         self.root = Node()
         self.size = 0
         
-    def search(self, value):
-        pass
+    def search(self, key):
+        node = self._search(self.root, key, 0)
+        if node is None: 
+            return None
+        else:
+            return node.value
         
+    def _search(self, node, key, d):
+        if node is None:
+            return None
+        
+        if d == len(key):
+            return node
+        else:
+            c = ord(key[d])
+            return self._search(node.next[c], key, d+1)
+
     def insert(self, key, value=0):
         self.root = self._insert(self.root, key, value, 0)
         
