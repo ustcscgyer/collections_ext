@@ -1,5 +1,5 @@
 class QuickUnion(object):
-    def __init__(self, n, connections=None):
+    def __init__(self, n, connections=[]):
         self.parent = list(range(n))
         self.size = [1] * n
 
