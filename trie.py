@@ -1,57 +1,108 @@
-class Node(object):
-    __slots__ = ['value', 'next']
-    
-    def __init__(self, value=None):
-        self.value = value
-        self.next = [None] * 256
-        
-    def __repr__(self):
-        return ('TrieNode:', self.value).__repr__()
-        
-class Trie(object):
-    __slots__ = ['root', 'size']
-    
-    def __init__(self):
-        self.root = Node()
+R = 256 
+class TrieNode:
+    __slots__ = ('val', 'next')
+    def __init__(self, val=None):
+        self.val = val
+        self.next = [None] * R
+
+class Trie:
+    __slots__ = ('root', 'size')
+
+    def __init__(self, key_vals=[]):
+        self.root = None
         self.size = 0
-        
-    def get(self, key):
-        """
-        get gets the value of the node,
-        search gets the node
-        """
-        node = self.search(key)
-        if node is None: 
-            return None
-        else:
-            return node.value
 
-    def search(self, key):
-        return self._search(self.root, key, 0)
-        
-    def _search(self, node, key, d):
-        if node is None:
-            return None
-        
-        if d == len(key):
-            return node
-        else:
-            c = ord(key[d])
-            return self._search(node.next[c], key, d+1)
+        for k, v in key_vals:
+            self.put(k, v)
 
-    def insert(self, key, value=0):
-        self.root = self._insert(self.root, key, value, 0)
-        
+    def put(self, key, val=0):
+        self.root =  self._put(self.root, key, val)
+
         return self
-        
-    def _insert(self, node, key, value, d):
-        if node is None:  node = Node()
+
+    def _put(self, TrieNode, key, val, d=0):
+        if TrieNode is None:
+            TrieNode = TrieNode()
         if d == len(key):
-            if node.value is None:
-                self.size += 1
-            node.value = value
+            if TrieNode.val is None: self.size += 1
+            TrieNode.val = val
         else:
             c = ord(key[d])
-            node.next[c] = self._insert(node.next[c], key, value, d+1)
-        
-        return node
+            TrieNode.next[c] = self._put(TrieNode.next[c], key, val, d+1)
+
+        return TrieNode
+
+    def isEmpty(self):
+        return self.size == 0
+
+    def contains(self, key):
+        return self.get(key) != None
+
+    def get(self, key):
+        TrieNode = self._search(self.root, key)
+
+        if TrieNode is None:
+            return None
+        else:
+            return  TrieNode.val
+
+    def _search(self, TrieNode, key, d=0):
+        if TrieNode is None:
+            return None
+        elif d == len(key):
+            return TrieNode
+        else:
+            c = ord(key[d])
+            return self._search(TrieNode.next[c], key, d+1)
+
+    def delete(self, key):
+        self.root = self._delete(self.root, key)
+
+        return self
+
+    def _delete(self, TrieNode, key, d=0):
+        if TrieNode is None:
+            return None
+        elif d == len(key) and TrieNode.val is not None:
+            TrieNode.val = None
+            self.size -= 1
+        else:
+            c = ord(key[d])
+            TrieNode.next[c] = self._delete(TrieNode.next[c], key, d+1)
+
+        if TrieNode.val is not None:
+            return TrieNode
+
+        for n in TrieNode.next:
+            if n is not None:
+                return TrieNode
+
+        return None
+
+    def prefix(self, pre):
+        TrieNode = self._search(self.root, pre)
+
+        return self._collect(TrieNode, pre)
+
+
+    def _collect(self, TrieNode, pre):
+        if TrieNode is None:
+            return []
+        elif TrieNode.val is not None:
+            result = [pre]
+        else:
+            result = []
+
+        for i in range(len(TrieNode.next)):
+            result += [s for s in self._collect(TrieNode.next[i], pre + chr(i))]
+
+        return result
+
+    def keys(self):
+        return self.prefix('')
+
+    def __iter__(self):
+        return self.keys().__iter__()
+
+    def items(self):
+        raise NotImplementedError

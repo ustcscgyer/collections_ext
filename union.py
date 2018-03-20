@@ -1,15 +1,17 @@
 class QuickUnion(object):
+    __slots__ = ('_parent', '_size')
+
     def __init__(self, n, connections=None):
-        self.parent = list(range(n))
-        self.size = [1] * n
+        self._parent = list(range(n))
+        self._size = [1] * n
 
         for conn in connections:
             self.union(conn[0], conn[1])
 
     def _root(self, k):
-        p = self.parent
+        p = self._parent
         while k != p[k]:
-            p[k] = p[p[k]]
+            p[k] = p[p[k]]  # This simple trick enhances the performance
             k = p[k]
         
         return k
@@ -22,12 +24,12 @@ class QuickUnion(object):
         rootb = self._root(b)
 
         if roota != rootb:
-            if self.size[roota] < self.size[rootb]:
-                self.parent[roota] = rootb
-                self.size[rootb] += self.size[roota]
+            if self._size[roota] < self._size[rootb]:
+                self._parent[roota] = rootb
+                self._size[rootb] += self._size[roota]
             else:
-                self.parent[rootb] = roota
-                self.size[roota] += self.size[rootb]
+                self._parent[rootb] = roota
+                self._size[roota] += self._size[rootb]
 
     def connected(self, a, b):
         """
