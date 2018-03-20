@@ -1,15 +1,9 @@
 class QuickUnion(object):
-<<<<<<< HEAD
     __slots__ = ('_parent', '_size')
 
-    def __init__(self, n, connections=None):
-        self._parent = list(range(n))
-        self._size = [1] * n
-=======
     def __init__(self, n, connections=[]):
         self.parent = list(range(n))
         self.size = [1] * n
->>>>>>> 1e1729fd9866636da7eb6bb88cea9ab91ce8a375
 
         for conn in connections:
             self.union(conn[0], conn[1])
