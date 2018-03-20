@@ -100,3 +100,12 @@ class Heap(object):
     
     def __nonzero__(self):
         return len(self._data) > 0
+
+    def copy(self):
+        """
+        Make a deep copy of the object
+        """
+        other = Heap(key=self._key)
+        other._data = self._data.copy()
+
+        return other
