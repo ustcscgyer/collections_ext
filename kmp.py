@@ -44,7 +44,6 @@ class KMP(object):
         
     def search(self, S):
         m, i = 0, 0
-        c = 0
         
         while i < len(self.W) and m+i < len(S):
             if S[m+i] == self.W[i]:
@@ -53,7 +52,6 @@ class KMP(object):
                 m = m + i - self.T[i]
                 i = max(self.T[i], 0)
             
-        print(c)
         if i == len(self.W):
             return m
         else: 
