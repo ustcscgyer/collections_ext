@@ -4,3 +4,6 @@ from .bst import BST
 from .rb_tree import RedBlackTree
 from .trie import Trie
 from .tst import TST
+from .kmp import KMP
+from .quicksort import QuickSort
+from .quickselect import QuickSelect
