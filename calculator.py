@@ -57,4 +57,5 @@ def getTokens(s):
             token.append(s[i])
         i += 1
             
-    yield ''.join(token)
+    if token != []
+        yield ''.join(token)
