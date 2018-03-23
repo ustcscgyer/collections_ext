@@ -36,3 +36,25 @@ def evalPostfix(s):
             
     assert len(nums) == 1
     return nums[0]
+
+def getTokens(s):
+    i, token = 0, []
+    while i < len(s):
+        if s[i] == ' ':
+            if token == []:
+                pass
+            else:
+                yield ''.join(token)
+                token = []
+        elif s[i] in '+-/*()':
+            if token == []:
+                yield s[i]
+            else:
+                yield ''.join(token)
+                token = []
+                i -= 1
+        else:
+            token.append(s[i])
+        i += 1
+            
+    yield ''.join(token)
