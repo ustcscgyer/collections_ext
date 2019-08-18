@@ -1,58 +1,38 @@
-def partial(W):
-    """
-    An efficient implementation of partial matching table
-    """
-    T = [-1] * len(W)
-    k = 0
-        
-    for pos in range(1, len(W)):
-        while k >= 1 and W[pos-1] != W[k-1]:
-            k = T[k]
-        
-        if W[pos] == W[k]:
-            T[pos] = T[k]
-        else:
-            T[pos] = k
-            
-        k = k  + 1
-        
-    return T
+def partial(w):
+    nexts = [0] * len(w)
 
-def partial_ez(W):
-    """
-    Partial table created by this function is a working table but suboptimal,
-    however the implementation is easier and straightforward.
-    """
-    T = [-1] * len(W)
-    k = 0
-    
-    for pos in range(1, len(W)):
-        while k >= 1 and W[pos-1] != W[k-1]:
-            k = T[k]
+    for pos in range(1, len(w)):
+        k = nexts[pos - 1]
+        while k > 0 and w[k] != w[pos]:
+            k = nexts[k - 1]
             
-        T[pos] = k
-        k = k + 1
-        
-    return T
-    
+        nexts[pos] = k + 1 if w[k] == w[pos] else k
+
+    return nexts
+
+
 class KMP(object):
-    __slots__ = ('W', 'T')
-    
-    def __init__(self, pat):
-        self.W = pat
-        self.T = partial(pat)
-        
-    def search(self, S):
+
+    def __init__(self, w):
+        self.w = w
+        self.nexts = partial(w)
+        print(self.nexts)
+
+    def search(self, s):
         m, i = 0, 0
-        
-        while i < len(self.W) and m+i < len(S):
-            if S[m+i] == self.W[i]:
+
+        while i < len(self.w) and m+i < len(s):
+            if s[m+i] == self.w[i]:
                 i += 1
             else:
-                m = m + i - self.T[i]
-                i = max(self.T[i], 0)
-            
-        if i == len(self.W):
+                print(m, i, self.nexts[i-1])
+                if i == 0:
+                    m += 1
+                else:
+                    m += i - self.nexts[i-1]
+                    i = self.nexts[i-1]
+                
+        if i == len(self.w):
             return m
-        else: 
+        else:
             return -1
