@@ -13,7 +13,7 @@ class QuickSelect(object):
         return self.data[:k]
     
     def _sort(self, k, data, lo, hi):
-        if (hi < lo):
+        if (hi <= lo):
             return
         
         lt, gt, i = lo, hi, lo + 1
@@ -27,9 +27,9 @@ class QuickSelect(object):
             else:
                 i += 1
         
-        if k < lt:
+        if k <= lt:
             self._sort(k, data, lo, lt-1)
         elif k > gt + 1:
-            self._sort(k - gt - 1, data, gt+1, hi)
+            self._sort(k, data, gt+1, hi)
         else:
             return
